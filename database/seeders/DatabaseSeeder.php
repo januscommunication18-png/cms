@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Category;
-use App\Models\Project;
 use App\Models\Client;
 use App\Models\SiteSetting;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -61,50 +60,5 @@ class DatabaseSeeder extends Seeder
             Client::create($client);
         }
 
-        // Sample Projects
-        $projects = [
-            [
-                'title' => 'Healthcare Patient Portal',
-                'slug' => 'healthcare-patient-portal',
-                'description' => 'Redesigning the patient experience for a major healthcare provider.',
-                'category_id' => 1,
-                'tags' => ['Mobile App', 'B2C', 'Healthcare'],
-                'client_name' => 'CVS',
-                'is_featured' => true,
-                'order' => 1,
-            ],
-            [
-                'title' => 'Social Media Dashboard',
-                'slug' => 'social-media-dashboard',
-                'description' => 'Analytics platform for social media managers.',
-                'category_id' => 2,
-                'tags' => ['Web App', 'Data Visualization', 'B2B'],
-                'is_featured' => true,
-                'order' => 2,
-            ],
-            [
-                'title' => 'Enterprise CRM Enhancement',
-                'slug' => 'enterprise-crm-enhancement',
-                'description' => 'Improving Salesforce workflow for enterprise sales teams.',
-                'category_id' => 3,
-                'tags' => ['Salesforce', 'Enterprise', 'B2B'],
-                'client_name' => 'Wells Fargo',
-                'order' => 3,
-            ],
-            [
-                'title' => 'Payroll Management System',
-                'slug' => 'payroll-management-system',
-                'description' => 'Streamlined payroll processing for small businesses.',
-                'category_id' => 4,
-                'tags' => ['Web App', 'B2B', 'Fintech'],
-                'client_name' => 'ADP',
-                'is_featured' => true,
-                'order' => 4,
-            ],
-        ];
-
-        foreach ($projects as $project) {
-            Project::create($project);
-        }
     }
 }
