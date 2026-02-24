@@ -11,7 +11,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Middleware aliases
+        $middleware->alias([
+            'security.code' => \App\Http\Middleware\SecurityCodeGate::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

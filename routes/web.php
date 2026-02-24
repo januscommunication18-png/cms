@@ -13,23 +13,30 @@ use App\Http\Controllers\Admin\ClientPasswordController;
 use App\Http\Controllers\Admin\ProjectVisitController;
 use App\Http\Controllers\Admin\BlockUploadController;
 use App\Http\Controllers\ClientAuthController;
+use App\Http\Controllers\SecurityCodeController;
 use Illuminate\Support\Facades\Route;
 
-// Frontend Routes
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/case-studies', [ProjectController::class, 'index'])->name('case-studies');
-Route::get('/project/{slug}', [ProjectController::class, 'show'])->name('project.show');
-Route::post('/project/{slug}/verify-password', [ProjectController::class, 'verifyPassword'])->name('project.verify-password');
-Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+// Security Code Routes
+Route::get('/security-code', [SecurityCodeController::class, 'show'])->name('security.code');
+Route::post('/security-code', [SecurityCodeController::class, 'verify'])->name('security.verify');
 
-// Client Authentication
-Route::get('/client-login', [ClientAuthController::class, 'showLogin'])->name('client.login');
-Route::post('/client-login', [ClientAuthController::class, 'login'])->name('client.login.submit');
-Route::get('/client-logout', [ClientAuthController::class, 'logout'])->name('client.logout');
+// Frontend Routes (protected by security code)
+Route::middleware('security.code')->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/case-studies', [ProjectController::class, 'index'])->name('case-studies');
+    Route::get('/project/{slug}', [ProjectController::class, 'show'])->name('project.show');
+    Route::post('/project/{slug}/verify-password', [ProjectController::class, 'verifyPassword'])->name('project.verify-password');
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+    Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
-// Admin Routes (authenticated)
-Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+    // Client Authentication
+    Route::get('/client-login', [ClientAuthController::class, 'showLogin'])->name('client.login');
+    Route::post('/client-login', [ClientAuthController::class, 'login'])->name('client.login.submit');
+    Route::get('/client-logout', [ClientAuthController::class, 'logout'])->name('client.logout');
+});
+
+// Admin Routes (authenticated + security code)
+Route::middleware(['security.code', 'auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('projects', AdminProjectController::class)->except(['show']);
@@ -48,8 +55,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::delete('/blocks/delete', [BlockUploadController::class, 'delete'])->name('blocks.delete');
 });
 
-// Auth Routes
-Route::middleware('auth')->group(function () {
+// Auth Routes (protected by security code)
+Route::middleware(['security.code', 'auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

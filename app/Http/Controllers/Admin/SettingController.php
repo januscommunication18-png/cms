@@ -17,6 +17,7 @@ class SettingController extends Controller
             'linkedin_url' => SiteSetting::get('linkedin_url', ''),
             'email' => SiteSetting::get('email', ''),
             'font_name' => SiteSetting::get('font_name', 'Messina Sans'),
+            'security_code_enabled' => SiteSetting::get('security_code_enabled', '1'),
         ];
 
         return view('admin.settings.index', compact('settings'));
@@ -31,7 +32,11 @@ class SettingController extends Controller
             'linkedin_url' => 'nullable|url|max:255',
             'email' => 'nullable|email|max:255',
             'font_name' => 'nullable|string|max:255',
+            'security_code_enabled' => 'nullable|in:0,1',
         ]);
+
+        // Handle checkbox - if not present, it's disabled
+        $validated['security_code_enabled'] = $request->has('security_code_enabled') ? '1' : '0';
 
         foreach ($validated as $key => $value) {
             SiteSetting::set($key, $value);

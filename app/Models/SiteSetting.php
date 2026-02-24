@@ -18,4 +18,13 @@ class SiteSetting extends Model
     {
         return static::updateOrCreate(['key' => $key], ['value' => $value]);
     }
+
+    /**
+     * Check if security code is enabled.
+     */
+    public static function isSecurityCodeEnabled(): bool
+    {
+        $value = static::get('security_code_enabled', '1');
+        return $value === '1' || $value === 'true' || $value === true;
+    }
 }
