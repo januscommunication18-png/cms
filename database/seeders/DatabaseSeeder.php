@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($categories as $category) {
-            Category::create($category);
+            Category::updateOrCreate(['slug' => $category['slug']], $category);
         }
 
         // Clients
@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($clients as $client) {
-            Client::create($client);
+            Client::updateOrCreate(['name' => $client['name']], $client);
         }
 
     }
