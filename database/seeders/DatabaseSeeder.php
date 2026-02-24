@@ -18,11 +18,14 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Create admin user
-        User::factory()->create([
-            'name' => 'Rohit Philip',
-            'email' => 'rohitcphilip@gmail.com',
-            'password' => Hash::make('admin@123'),
-        ]);
+        User::updateOrCreate(
+            ['email' => 'rohitcphilip@gmail.com'],
+            [
+                'name' => 'Rohit Philip',
+                'password' => Hash::make('admin@123'),
+                'email_verified_at' => now(),
+            ]
+        );
 
         // Site Settings
         SiteSetting::set('site_title', 'Rohit Philip');
