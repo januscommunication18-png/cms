@@ -7,6 +7,10 @@
     $overlayColor = $data['overlay_color'] ?? '#000000';
     $textAlignment = $data['text_alignment'] ?? 'center';
 
+    // Custom dimensions for fixed-width layouts
+    $imageHeight = !empty($data['image_height']) ? intval($data['image_height']) : 500;
+    $imageMaxWidth = !empty($data['image_max_width']) ? intval($data['image_max_width']) : 1152;
+
     $alignmentClass = match($textAlignment) {
         'left' => 'text-left',
         'right' => 'text-right',
@@ -43,8 +47,8 @@
 
 @elseif($layout === 'fixed-width')
     {{-- Fixed Width Image --}}
-    <div class="max-w-6xl mx-auto px-4 md:px-6">
-        <div class="relative rounded-2xl overflow-hidden min-h-[400px] md:min-h-[500px] flex items-center justify-center">
+    <div class="mx-auto px-4 md:px-6" style="max-width: {{ $imageMaxWidth }}px;">
+        <div class="relative rounded-2xl overflow-hidden flex items-center justify-center" style="min-height: {{ $imageHeight }}px;">
             @if($data['image'] ?? false)
                 <img src="{{ asset('storage/' . $data['image']) }}"
                      alt="{{ $data['title'] ?? '' }}"
@@ -73,8 +77,8 @@
 @elseif($layout === 'full-bg-fixed-image')
     {{-- Full Width Background + Fixed Image in Center --}}
     <div class="w-full py-12 md:py-16" style="background-color: {{ $bgColor }}">
-        <div class="max-w-6xl mx-auto px-4 md:px-6">
-            <div class="relative rounded-2xl overflow-hidden min-h-[400px] md:min-h-[500px] flex items-center justify-center">
+        <div class="mx-auto px-4 md:px-6" style="max-width: {{ $imageMaxWidth }}px;">
+            <div class="relative rounded-2xl overflow-hidden flex items-center justify-center" style="min-height: {{ $imageHeight }}px;">
                 @if($data['image'] ?? false)
                     <img src="{{ asset('storage/' . $data['image']) }}"
                          alt="{{ $data['title'] ?? '' }}"

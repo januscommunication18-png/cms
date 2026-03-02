@@ -39,11 +39,19 @@
     // Check if any column has background color set
     $leftHasBg = $leftBgColor && $leftBgColor !== 'transparent';
     $rightHasBg = $rightBgColor && $rightBgColor !== 'transparent';
+
+    // Check if columns have content
+    $leftHasContent = !empty($data['left_title']) || !empty($data['left_content']);
+    $rightHasContent = !empty($data['right_title']) || !empty($data['right_image']) || !empty($data['right_content']);
+
+    // If only one column has content, use single column layout
+    $useGrid = $leftHasContent && $rightHasContent;
 @endphp
 
 <div class="max-w-6xl mx-auto px-4 md:px-6">
-    <div class="grid grid-cols-1 {{ $gridClass }} gap-6 md:gap-8 {{ $alignClass }}">
+    <div class="{{ $useGrid ? 'grid grid-cols-1 ' . $gridClass . ' gap-6 md:gap-8 ' . $alignClass : '' }}">
         {{-- Left Column --}}
+        @if($leftHasContent)
         <div class="{{ $leftHasBg || $cardStyle ? 'rounded-xl h-full' : '' }}"
              style="background-color: {{ $leftBgColor }}; color: {{ $leftTextColor }}; padding: {{ $leftPaddingTop }}px {{ $leftPaddingRight }}px {{ $leftPaddingBottom }}px {{ $leftPaddingLeft }}px;">
             @if($data['left_title'] ?? false)
@@ -65,8 +73,10 @@
                 </div>
             @endif
         </div>
+        @endif
 
         {{-- Right Column --}}
+        @if($rightHasContent)
         <div class="{{ $rightHasBg || $cardStyle ? 'rounded-xl h-full' : '' }}"
              style="background-color: {{ $rightBgColor }}; color: {{ $rightTextColor }}; padding: {{ $rightPaddingTop }}px {{ $rightPaddingRight }}px {{ $rightPaddingBottom }}px {{ $rightPaddingLeft }}px;">
             @if($data['right_title'] ?? false)
@@ -92,5 +102,6 @@
                 </div>
             @endif
         </div>
+        @endif
     </div>
 </div>

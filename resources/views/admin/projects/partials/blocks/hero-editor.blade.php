@@ -76,6 +76,33 @@
         </div>
     </div>
 
+    {{-- Image Dimensions (for fixed-width and full-bg-fixed-image layouts) --}}
+    <div x-show="block.data.image && (block.data.layout === 'fixed-width' || block.data.layout === 'full-bg-fixed-image')" x-collapse>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Image Dimensions</label>
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-xs text-gray-500 mb-1">Height (px)</label>
+                <input type="number" x-model="block.data.image_height"
+                    @input="updateHiddenInput()"
+                    class="w-full border-gray-300 rounded-md shadow-sm text-sm focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="500"
+                    min="200"
+                    max="1200">
+                <p class="text-xs text-gray-400 mt-1">Default: 500px</p>
+            </div>
+            <div>
+                <label class="block text-xs text-gray-500 mb-1">Max Width (px)</label>
+                <input type="number" x-model="block.data.image_max_width"
+                    @input="updateHiddenInput()"
+                    class="w-full border-gray-300 rounded-md shadow-sm text-sm focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="1152"
+                    min="400"
+                    max="1920">
+                <p class="text-xs text-gray-400 mt-1">Default: 1152px (max-w-6xl)</p>
+            </div>
+        </div>
+    </div>
+
     {{-- Title --}}
     <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">Title</label>
