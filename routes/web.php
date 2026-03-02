@@ -40,6 +40,7 @@ Route::middleware(['security.code', 'auth', 'verified'])->prefix('admin')->name(
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('projects', AdminProjectController::class)->except(['show']);
+    Route::post('projects/{project}/duplicate', [AdminProjectController::class, 'duplicate'])->name('projects.duplicate');
     Route::resource('categories', CategoryController::class)->except(['show']);
     Route::resource('clients', ClientController::class)->except(['show']);
     Route::resource('client-passwords', ClientPasswordController::class)->except(['show']);

@@ -23,12 +23,31 @@
     @if(isset($googleFonts[$fontName]))
         <link href="https://fonts.googleapis.com/css2?family={{ $googleFonts[$fontName] }}&display=swap" rel="stylesheet">
     @endif
+    {{-- Additional Google Fonts for rich text content --}}
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;500;600;700&family=Lato:wght@400;700&family=Montserrat:wght@400;500;600;700&family=Merriweather:wght@400;700&family=Source+Sans+3:wght@400;600;700&family=Raleway:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         body {
             font-family: '{{ $fontName }}', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
+        /* Quill font classes for rich text content */
+        .ql-font-inter { font-family: 'Inter', sans-serif !important; }
+        .ql-font-playfair { font-family: 'Playfair Display', serif !important; }
+        .ql-font-roboto { font-family: 'Roboto', sans-serif !important; }
+        .ql-font-opensans { font-family: 'Open Sans', sans-serif !important; }
+        .ql-font-lato { font-family: 'Lato', sans-serif !important; }
+        .ql-font-montserrat { font-family: 'Montserrat', sans-serif !important; }
+        .ql-font-poppins { font-family: 'Poppins', sans-serif !important; }
+        .ql-font-merriweather { font-family: 'Merriweather', serif !important; }
+        .ql-font-sourcesans { font-family: 'Source Sans 3', sans-serif !important; }
+        .ql-font-raleway { font-family: 'Raleway', sans-serif !important; }
+        .ql-font-plusjakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }
+        .ql-font-dmsans { font-family: 'DM Sans', sans-serif !important; }
+        .ql-font-manrope { font-family: 'Manrope', sans-serif !important; }
+        .ql-font-outfit { font-family: 'Outfit', sans-serif !important; }
+        .ql-font-spacegrotesk { font-family: 'Space Grotesk', sans-serif !important; }
+        .ql-font-sora { font-family: 'Sora', sans-serif !important; }
     </style>
 </head>
 <body class="antialiased bg-white text-gray-900">

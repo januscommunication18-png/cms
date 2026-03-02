@@ -60,5 +60,9 @@ class DatabaseSeeder extends Seeder
             Client::updateOrCreate(['name' => $client['name']], $client);
         }
 
+        // Call additional seeders
+        $this->call([
+            RohitInfoSeeder::class,
+        ]);
     }
 }

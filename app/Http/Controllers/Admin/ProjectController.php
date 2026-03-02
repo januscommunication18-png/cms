@@ -169,4 +169,29 @@ class ProjectController extends Controller
         return redirect()->route('admin.projects.index')
             ->with('success', 'Project deleted successfully.');
     }
+
+    public function duplicate(Project $project)
+    {
+        // Create a copy of the project
+        $newProject = $project->replicate();
+        $newProject->title = $project->title . ' (Copy)';
+        $newProject->slug = Str::slug($newProject->title);
+
+        // Ensure unique slug
+        $originalSlug = $newProject->slug;
+        $count = 1;
+        while (Project::where('slug', $newProject->slug)->exists()) {
+            $newProject->slug = $originalSlug . '-' . $count;
+            $count++;
+        }
+
+        $newProject->save();
+
+        // Copy client password associations
+        $clientPasswordIds = $project->clientPasswords->pluck('id')->toArray();
+        $newProject->clientPasswords()->sync($clientPasswordIds);
+
+        return redirect()->route('admin.projects.edit', $newProject)
+            ->with('success', 'Project duplicated successfully. You can now edit the copy.');
+    }
 }

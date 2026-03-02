@@ -42,6 +42,16 @@
             <h4 class="text-sm font-medium text-blue-800">Left Column</h4>
         </div>
         <div class="p-4 space-y-4">
+            {{-- Left Column Title --}}
+            <div>
+                <label class="block text-xs text-gray-500 mb-1">Title (optional)</label>
+                <input type="text"
+                    x-model="block.data.left_title"
+                    @input="updateHiddenInput()"
+                    class="w-full text-sm border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Column title...">
+            </div>
+
             {{-- Left Column Colors --}}
             <div class="grid grid-cols-2 gap-3">
                 <div>
@@ -127,6 +137,16 @@
             <h4 class="text-sm font-medium text-green-800">Right Column</h4>
         </div>
         <div class="p-4 space-y-4">
+            {{-- Right Column Title --}}
+            <div>
+                <label class="block text-xs text-gray-500 mb-1">Title (optional)</label>
+                <input type="text"
+                    x-model="block.data.right_title"
+                    @input="updateHiddenInput()"
+                    class="w-full text-sm border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Column title...">
+            </div>
+
             {{-- Right Column Colors --}}
             <div class="grid grid-cols-2 gap-3">
                 <div>

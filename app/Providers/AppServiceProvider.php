@@ -40,5 +40,10 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with('settings', $settings);
         });
+
+        // Share font setting with admin layout for Quill editor
+        View::composer('admin.layouts.admin', function ($view) {
+            $view->with('siteFont', SiteSetting::get('font_name', 'Messina Sans'));
+        });
     }
 }

@@ -62,6 +62,10 @@
                     <td class="px-6 py-4">
                         <div class="flex space-x-2">
                             <a href="{{ route('admin.projects.edit', $project) }}" class="text-blue-500 hover:text-blue-700">Edit</a>
+                            <form action="{{ route('admin.projects.duplicate', $project) }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit" class="text-green-500 hover:text-green-700">Copy</button>
+                            </form>
                             <form action="{{ route('admin.projects.destroy', $project) }}" method="POST" onsubmit="return confirm('Are you sure?')">
                                 @csrf
                                 @method('DELETE')

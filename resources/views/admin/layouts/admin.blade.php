@@ -5,7 +5,212 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }} - Admin</title>
+
+    {{-- Google Fonts --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;500;600;700&family=Lato:wght@400;700&family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Merriweather:wght@400;700&family=Source+Sans+3:wght@400;600;700&family=Raleway:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    {{-- Quill Editor --}}
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        /* Quill Editor Custom Styles */
+        .ql-editor {
+            min-height: 120px;
+            font-size: 14px;
+        }
+        .ql-container {
+            font-family: inherit;
+        }
+        .ql-toolbar.ql-snow {
+            border-top-left-radius: 0.375rem;
+            border-top-right-radius: 0.375rem;
+            background: #f9fafb;
+        }
+        .ql-container.ql-snow {
+            border-bottom-left-radius: 0.375rem;
+            border-bottom-right-radius: 0.375rem;
+        }
+        /* Font picker styles */
+        .ql-snow .ql-picker.ql-font {
+            width: 130px;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item::before {
+            content: 'Sans Serif';
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="inter"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="inter"]::before {
+            content: 'Inter';
+            font-family: 'Inter', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="playfair"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="playfair"]::before {
+            content: 'Playfair Display';
+            font-family: 'Playfair Display', serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="roboto"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="roboto"]::before {
+            content: 'Roboto';
+            font-family: 'Roboto', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="opensans"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="opensans"]::before {
+            content: 'Open Sans';
+            font-family: 'Open Sans', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="lato"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="lato"]::before {
+            content: 'Lato';
+            font-family: 'Lato', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="montserrat"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="montserrat"]::before {
+            content: 'Montserrat';
+            font-family: 'Montserrat', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="poppins"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="poppins"]::before {
+            content: 'Poppins';
+            font-family: 'Poppins', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="merriweather"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="merriweather"]::before {
+            content: 'Merriweather';
+            font-family: 'Merriweather', serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="sourcesans"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="sourcesans"]::before {
+            content: 'Source Sans';
+            font-family: 'Source Sans 3', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="raleway"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="raleway"]::before {
+            content: 'Raleway';
+            font-family: 'Raleway', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="plusjakarta"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="plusjakarta"]::before {
+            content: 'Plus Jakarta Sans';
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="dmsans"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="dmsans"]::before {
+            content: 'DM Sans';
+            font-family: 'DM Sans', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="manrope"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="manrope"]::before {
+            content: 'Manrope';
+            font-family: 'Manrope', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="outfit"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="outfit"]::before {
+            content: 'Outfit';
+            font-family: 'Outfit', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="spacegrotesk"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="spacegrotesk"]::before {
+            content: 'Space Grotesk';
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="sora"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="sora"]::before {
+            content: 'Sora';
+            font-family: 'Sora', sans-serif;
+        }
+        /* Apply fonts in editor and output */
+        .ql-font-inter, .ql-editor .ql-font-inter { font-family: 'Inter', sans-serif !important; }
+        .ql-font-playfair, .ql-editor .ql-font-playfair { font-family: 'Playfair Display', serif !important; }
+        .ql-font-roboto, .ql-editor .ql-font-roboto { font-family: 'Roboto', sans-serif !important; }
+        .ql-font-opensans, .ql-editor .ql-font-opensans { font-family: 'Open Sans', sans-serif !important; }
+        .ql-font-lato, .ql-editor .ql-font-lato { font-family: 'Lato', sans-serif !important; }
+        .ql-font-montserrat, .ql-editor .ql-font-montserrat { font-family: 'Montserrat', sans-serif !important; }
+        .ql-font-poppins, .ql-editor .ql-font-poppins { font-family: 'Poppins', sans-serif !important; }
+        .ql-font-merriweather, .ql-editor .ql-font-merriweather { font-family: 'Merriweather', serif !important; }
+        .ql-font-sourcesans, .ql-editor .ql-font-sourcesans { font-family: 'Source Sans 3', sans-serif !important; }
+        .ql-font-raleway, .ql-editor .ql-font-raleway { font-family: 'Raleway', sans-serif !important; }
+        .ql-font-plusjakarta, .ql-editor .ql-font-plusjakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }
+        .ql-font-dmsans, .ql-editor .ql-font-dmsans { font-family: 'DM Sans', sans-serif !important; }
+        .ql-font-manrope, .ql-editor .ql-font-manrope { font-family: 'Manrope', sans-serif !important; }
+        .ql-font-outfit, .ql-editor .ql-font-outfit { font-family: 'Outfit', sans-serif !important; }
+        .ql-font-spacegrotesk, .ql-editor .ql-font-spacegrotesk { font-family: 'Space Grotesk', sans-serif !important; }
+        .ql-font-sora, .ql-editor .ql-font-sora { font-family: 'Sora', sans-serif !important; }
+        /* Size picker styles */
+        .ql-snow .ql-picker.ql-size .ql-picker-label::before,
+        .ql-snow .ql-picker.ql-size .ql-picker-item::before {
+            content: 'Size';
+        }
+        .ql-snow .ql-picker.ql-size .ql-picker-label[data-value="12px"]::before,
+        .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="12px"]::before { content: '12px'; }
+        .ql-snow .ql-picker.ql-size .ql-picker-label[data-value="14px"]::before,
+        .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="14px"]::before { content: '14px'; }
+        .ql-snow .ql-picker.ql-size .ql-picker-label[data-value="16px"]::before,
+        .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="16px"]::before { content: '16px'; }
+        .ql-snow .ql-picker.ql-size .ql-picker-label[data-value="18px"]::before,
+        .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="18px"]::before { content: '18px'; }
+        .ql-snow .ql-picker.ql-size .ql-picker-label[data-value="20px"]::before,
+        .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="20px"]::before { content: '20px'; }
+        .ql-snow .ql-picker.ql-size .ql-picker-label[data-value="24px"]::before,
+        .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="24px"]::before { content: '24px'; }
+        .ql-snow .ql-picker.ql-size .ql-picker-label[data-value="28px"]::before,
+        .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="28px"]::before { content: '28px'; }
+        .ql-snow .ql-picker.ql-size .ql-picker-label[data-value="32px"]::before,
+        .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="32px"]::before { content: '32px'; }
+        .ql-snow .ql-picker.ql-size .ql-picker-label[data-value="36px"]::before,
+        .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="36px"]::before { content: '36px'; }
+        .ql-snow .ql-picker.ql-size .ql-picker-label[data-value="48px"]::before,
+        .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="48px"]::before { content: '48px'; }
+    </style>
+
+    <script>
+        // Site font from settings
+        window.siteDefaultFont = '{{ $siteFont ?? "Inter" }}';
+
+        // Map site font names to Quill font class names
+        window.fontNameToQuill = {
+            'Messina Sans': 'inter', // fallback to Inter
+            'Inter': 'inter',
+            'Plus Jakarta Sans': 'plusjakarta',
+            'Poppins': 'poppins',
+            'DM Sans': 'dmsans',
+            'Manrope': 'manrope',
+            'Outfit': 'outfit',
+            'Space Grotesk': 'spacegrotesk',
+            'Sora': 'sora',
+            'Playfair Display': 'playfair',
+            'Roboto': 'roboto',
+            'Open Sans': 'opensans',
+            'Lato': 'lato',
+            'Montserrat': 'montserrat',
+            'Merriweather': 'merriweather',
+            'Source Sans 3': 'sourcesans',
+            'Raleway': 'raleway'
+        };
+
+        window.getQuillDefaultFont = function() {
+            return window.fontNameToQuill[window.siteDefaultFont] || 'inter';
+        };
+
+        // Register Quill fonts and sizes globally (once)
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof Quill !== 'undefined' && !window.quillFontsRegistered) {
+                const Font = Quill.import('formats/font');
+                Font.whitelist = ['inter', 'playfair', 'roboto', 'opensans', 'lato', 'montserrat', 'poppins', 'merriweather', 'sourcesans', 'raleway', 'plusjakarta', 'dmsans', 'manrope', 'outfit', 'spacegrotesk', 'sora'];
+                Quill.register(Font, true);
+
+                const Size = Quill.import('attributors/style/size');
+                Size.whitelist = ['12px', '14px', '16px', '18px', '20px', '24px', '28px', '32px', '36px', '48px'];
+                Quill.register(Size, true);
+
+                window.quillFontsRegistered = true;
+            }
+        });
+    </script>
 </head>
 <body class="font-sans antialiased bg-gray-100">
     <div class="min-h-screen">
