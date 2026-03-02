@@ -38,6 +38,7 @@ Route::middleware('security.code')->group(function () {
 // Admin Routes (authenticated + security code)
 Route::middleware(['security.code', 'auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::post('/sync-storage', [DashboardController::class, 'syncStorage'])->name('sync-storage');
 
     Route::resource('projects', AdminProjectController::class)->except(['show']);
     Route::post('projects/{project}/duplicate', [AdminProjectController::class, 'duplicate'])->name('projects.duplicate');

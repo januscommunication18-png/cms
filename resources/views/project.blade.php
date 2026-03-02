@@ -123,12 +123,6 @@
                     </div>
                 </div>
             </div>
-            @if($nextProject->image)
-                <div class="w-full h-64 md:h-80 overflow-hidden">
-                    <img src="{{ asset('storage/' . $nextProject->image) }}" alt="{{ $nextProject->title }}"
-                        class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-                </div>
-            @endif
         </a>
     </section>
 @endif
