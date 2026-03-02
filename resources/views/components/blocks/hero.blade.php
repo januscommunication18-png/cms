@@ -10,6 +10,7 @@
     // Custom dimensions for fixed-width layouts
     $imageWidth = !empty($data['image_width']) ? intval($data['image_width']) : 1152;
     $imageHeight = !empty($data['image_height']) ? intval($data['image_height']) : 500;
+    $imageFit = $data['image_fit'] ?? 'contain';
 
     $alignmentClass = match($textAlignment) {
         'left' => 'text-left',
@@ -52,7 +53,7 @@
             @if($data['image'] ?? false)
                 <img src="{{ asset('storage/' . $data['image']) }}"
                      alt="{{ $data['title'] ?? '' }}"
-                     class="absolute inset-0 w-full h-full object-cover">
+                     class="absolute inset-0 w-full h-full object-{{ $imageFit }}">
                 <div class="absolute inset-0" style="background-color: {{ $overlayColor }}; opacity: {{ $overlayOpacity }}"></div>
             @else
                 <div class="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900"></div>
@@ -82,7 +83,7 @@
                 @if($data['image'] ?? false)
                     <img src="{{ asset('storage/' . $data['image']) }}"
                          alt="{{ $data['title'] ?? '' }}"
-                         class="absolute inset-0 w-full h-full object-cover">
+                         class="absolute inset-0 w-full h-full object-{{ $imageFit }}">
                     <div class="absolute inset-0" style="background-color: {{ $overlayColor }}; opacity: {{ $overlayOpacity }}"></div>
                 @else
                     <div class="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900"></div>

@@ -79,7 +79,7 @@
     {{-- Image Dimensions (for fixed-width and full-bg-fixed-image layouts) --}}
     <div x-show="block.data.image && (block.data.layout === 'fixed-width' || block.data.layout === 'full-bg-fixed-image')" x-collapse>
         <label class="block text-sm font-medium text-gray-700 mb-2">Image Size</label>
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
                 <label class="block text-xs text-gray-500 mb-1">Width (px)</label>
                 <input type="number" x-model="block.data.image_width"
@@ -100,6 +100,19 @@
                     max="1200">
                 <p class="text-xs text-gray-400 mt-1">Default: 500px</p>
             </div>
+        </div>
+
+        {{-- Image Fit --}}
+        <div>
+            <label class="block text-xs text-gray-500 mb-1">Image Fit</label>
+            <select x-model="block.data.image_fit"
+                @change="updateHiddenInput()"
+                class="w-full text-sm border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <option value="contain">Contain (show full image)</option>
+                <option value="cover">Cover (fill & crop)</option>
+                <option value="fill">Fill (stretch to fit)</option>
+            </select>
+            <p class="text-xs text-gray-400 mt-1">Contain: shows full image without cropping</p>
         </div>
     </div>
 
